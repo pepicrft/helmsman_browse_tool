@@ -25,9 +25,12 @@ defmodule HelmsmanBrowseTool do
 
   - `"navigate"` - Navigate to a URL (requires `url`)
   - `"content"` - Get the current page content as HTML
+  - `"current_url"` - Get the current page URL
   - `"screenshot"` - Capture a screenshot (optional `format`, `quality`)
+  - `"print_to_pdf"` - Print the current page to PDF
   - `"click"` - Click an element (requires `selector`)
   - `"fill"` - Fill a form field (requires `selector`, `value`)
+  - `"wait_for"` - Wait for an element to appear (requires `selector`)
   - `"evaluate"` - Execute JavaScript (requires `expression`)
   """
 
@@ -40,7 +43,8 @@ defmodule HelmsmanBrowseTool do
   def description(_opts) do
     """
     Browse the web. Supports navigating to URLs, reading page content,
-    capturing screenshots, clicking elements, filling form fields, and
+    getting the current URL, capturing screenshots, printing to PDF,
+    clicking elements, filling form fields, waiting for elements, and
     executing JavaScript.
     """
     |> String.trim()
@@ -53,7 +57,17 @@ defmodule HelmsmanBrowseTool do
       properties: %{
         action: %{
           type: "string",
-          enum: ["navigate", "content", "screenshot", "click", "fill", "evaluate"],
+          enum: [
+            "navigate",
+            "content",
+            "current_url",
+            "screenshot",
+            "print_to_pdf",
+            "click",
+            "fill",
+            "wait_for",
+            "evaluate"
+          ],
           description: "The browsing action to perform"
         },
         url: %{
@@ -116,6 +130,13 @@ defmodule HelmsmanBrowseTool do
     end
   end
 
+  defp execute_action("current_url", _args, browser) do
+    case Browse.current_url(browser) do
+      {:ok, url} -> {{:ok, url}, :ok}
+      {:error, reason} -> {{:error, reason}, :ok}
+    end
+  end
+
   defp execute_action("screenshot", args, browser) do
     opts =
       []
@@ -130,6 +151,22 @@ defmodule HelmsmanBrowseTool do
         result = %{
           type: :image,
           media_type: media_type,
+          data: Base.encode64(data)
+        }
+
+        {{:ok, result}, :ok}
+
+      {:error, reason} ->
+        {{:error, reason}, :ok}
+    end
+  end
+
+  defp execute_action("print_to_pdf", _args, browser) do
+    case Browse.print_to_pdf(browser) do
+      {:ok, data} ->
+        result = %{
+          type: :document,
+          media_type: "application/pdf",
           data: Base.encode64(data)
         }
 
@@ -162,6 +199,17 @@ defmodule HelmsmanBrowseTool do
     {{:error, "Missing required parameters: selector and value"}, :ok}
   end
 
+  defp execute_action("wait_for", %{"selector" => selector}, browser) do
+    case Browse.wait_for(browser, selector, []) do
+      :ok -> {{:ok, "Element #{selector} is visible"}, :ok}
+      {:error, reason} -> {{:error, reason}, :ok}
+    end
+  end
+
+  defp execute_action("wait_for", _args, _browser) do
+    {{:error, "Missing required parameter: selector"}, :ok}
+  end
+
   defp execute_action("evaluate", %{"expression" => expression}, browser) do
     case Browse.evaluate(browser, expression, []) do
       {:ok, result} -> {{:ok, inspect(result)}, :ok}
@@ -174,7 +222,9 @@ defmodule HelmsmanBrowseTool do
   end
 
   defp execute_action(action, _args, _browser) do
-    {{:error, "Unknown action: #{action}. Expected one of: navigate, content, screenshot, click, fill, evaluate"}, :ok}
+    {{:error,
+      "Unknown action: #{action}. Expected one of: navigate, content, current_url, screenshot, print_to_pdf, click, fill, wait_for, evaluate"},
+     :ok}
   end
 
   defp maybe_put(opts, _key, nil), do: opts
