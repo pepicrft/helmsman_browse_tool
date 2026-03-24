@@ -1,6 +1,12 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+## [0.3.0] - 2026-03-24
+
+### Features
+
+- Add current_url, print_to_pdf, and wait_for actions from Browse 0.2
+
 ## [0.2.0] - 2026-03-24
 
 ### Changes
