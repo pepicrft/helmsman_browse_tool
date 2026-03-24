@@ -1,6 +1,8 @@
 defmodule HelmsmanBrowseToolTest do
-  use ExUnit.Case, async: false
+  use ExUnit.Case, async: true
   use Mimic
+
+  setup :set_mimic_private
 
   describe "name/1" do
     test "returns browse" do
