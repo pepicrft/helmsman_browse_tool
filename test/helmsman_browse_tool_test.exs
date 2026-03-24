@@ -81,6 +81,22 @@ defmodule HelmsmanBrowseToolTest do
                HelmsmanBrowseTool.call(%{"action" => "content"}, context)
     end
 
+    test "current_url action calls Browse.current_url", %{context: context} do
+      browser = %Browse{implementation: nil, state: nil}
+
+      expect(Browse, :checkout, fn :test_pool, fun, [timeout: 30_000] ->
+        {result, :ok} = fun.(browser)
+        result
+      end)
+
+      expect(Browse, :current_url, fn ^browser ->
+        {:ok, "https://example.com/page"}
+      end)
+
+      assert {:ok, "https://example.com/page"} ==
+               HelmsmanBrowseTool.call(%{"action" => "current_url"}, context)
+    end
+
     test "screenshot action calls Browse.capture_screenshot", %{context: context} do
       browser = %Browse{implementation: nil, state: nil}
 
@@ -95,6 +111,22 @@ defmodule HelmsmanBrowseToolTest do
 
       assert {:ok, %{type: :image, media_type: "image/png", data: Base.encode64("fake_png_data")}} ==
                HelmsmanBrowseTool.call(%{"action" => "screenshot"}, context)
+    end
+
+    test "print_to_pdf action calls Browse.print_to_pdf", %{context: context} do
+      browser = %Browse{implementation: nil, state: nil}
+
+      expect(Browse, :checkout, fn :test_pool, fun, [timeout: 30_000] ->
+        {result, :ok} = fun.(browser)
+        result
+      end)
+
+      expect(Browse, :print_to_pdf, fn ^browser ->
+        {:ok, "fake_pdf_data"}
+      end)
+
+      assert {:ok, %{type: :document, media_type: "application/pdf", data: Base.encode64("fake_pdf_data")}} ==
+               HelmsmanBrowseTool.call(%{"action" => "print_to_pdf"}, context)
     end
 
     test "click action calls Browse.click", %{context: context} do
@@ -130,6 +162,34 @@ defmodule HelmsmanBrowseToolTest do
                  %{"action" => "fill", "selector" => "#email", "value" => "test@example.com"},
                  context
                )
+    end
+
+    test "wait_for action calls Browse.wait_for", %{context: context} do
+      browser = %Browse{implementation: nil, state: nil}
+
+      expect(Browse, :checkout, fn :test_pool, fun, [timeout: 30_000] ->
+        {result, :ok} = fun.(browser)
+        result
+      end)
+
+      expect(Browse, :wait_for, fn ^browser, "#loading", [] ->
+        :ok
+      end)
+
+      assert {:ok, "Element #loading is visible"} ==
+               HelmsmanBrowseTool.call(%{"action" => "wait_for", "selector" => "#loading"}, context)
+    end
+
+    test "wait_for action returns error when selector is missing", %{context: context} do
+      browser = %Browse{implementation: nil, state: nil}
+
+      expect(Browse, :checkout, fn :test_pool, fun, [timeout: 30_000] ->
+        {result, :ok} = fun.(browser)
+        result
+      end)
+
+      assert {:error, "Missing required parameter: selector"} ==
+               HelmsmanBrowseTool.call(%{"action" => "wait_for"}, context)
     end
 
     test "evaluate action calls Browse.evaluate", %{context: context} do
