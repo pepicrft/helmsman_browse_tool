@@ -40,10 +40,24 @@ The tool exposes a `browse` tool to the LLM with the following actions:
 
 - 🧭 **navigate** — Navigate to a URL
 - 📄 **content** — Get the page content as HTML
+- 🔗 **current_url** — Get the current page URL
+- 🏷️ **title** — Get the current page title
 - 📸 **screenshot** — Capture a screenshot of the current page
+- 📑 **print_to_pdf** — Print the current page to PDF
 - 👆 **click** — Click an element on the page
+- 🖱️ **hover** — Hover over an element
 - ✏️ **fill** — Fill a form field
+- 📋 **select_option** — Select an option in a dropdown
+- ⏳ **wait_for** — Wait for an element to appear
+- 📝 **get_text** — Get the text content of an element
+- 🔍 **get_attribute** — Get an attribute of an element
 - ⚡ **evaluate** — Execute JavaScript on the page
+- ⬅️ **go_back** — Navigate back in browser history
+- ➡️ **go_forward** — Navigate forward in browser history
+- 🔄 **reload** — Reload the current page
+- 🍪 **get_cookies** — Get all cookies
+- 🍪 **set_cookie** — Set a cookie
+- 🧹 **clear_cookies** — Clear all cookies
 
 ## ⚙️ Configuration
 
