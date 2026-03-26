@@ -1,20 +1,20 @@
-defmodule HelmsmanBrowseTool do
+defmodule ConductBrowseTool do
   @moduledoc """
-  A Helmsman tool that gives AI agents the ability to browse the web.
+  A Condukt tool that gives AI agents the ability to browse the web.
 
   This tool wraps the `Browse` library to expose web navigation, content
   extraction, screenshots, clicking, form filling, and JavaScript evaluation
-  as a single parameterized tool for Helmsman agents.
+  as a single parameterized tool for Condukt agents.
 
   ## Usage
 
       defmodule MyAgent do
-        use Helmsman
+        use Condukt
 
         @impl true
         def tools do
           [
-            {HelmsmanBrowseTool, pool: MyApp.BrowserPool}
+            {ConductBrowseTool, pool: MyApp.BrowserPool}
           ]
         end
       end
@@ -34,7 +34,7 @@ defmodule HelmsmanBrowseTool do
   - `"evaluate"` - Execute JavaScript (requires `expression`)
   """
 
-  use Helmsman.Tool
+  use Condukt.Tool
 
   @impl true
   def name(_opts), do: "browse"

@@ -1,15 +1,15 @@
-# 🌐 HelmsmanBrowseTool
+# 🌐 ConductBrowseTool
 
-A [Helmsman](https://github.com/pepicrft/helmsman) tool that gives AI agents the ability to browse the web using [Browse](https://github.com/pepicrft/browse). 🤖🧭
+A [Condukt](https://github.com/pepicrft/condukt) tool that gives AI agents the ability to browse the web using [Browse](https://github.com/pepicrft/browse). 🤖🧭
 
 ## 📦 Installation
 
-Add `helmsman_browse_tool` to your list of dependencies in `mix.exs`, along with a browser backend:
+Add `conduct_browse_tool` to your list of dependencies in `mix.exs`, along with a browser backend:
 
 ```elixir
 def deps do
   [
-    {:helmsman_browse_tool, "~> 0.2.0"},
+    {:conduct_browse_tool, "~> 0.2.0"},
 
     # Pick a browser backend:
     {:browse_chrome, "~> 0.2"},  # Headless Chrome via CDP
@@ -21,16 +21,16 @@ end
 
 ## 🚀 Usage
 
-Add the browse tool to your Helmsman agent:
+Add the browse tool to your Condukt agent:
 
 ```elixir
 defmodule MyAgent do
-  use Helmsman
+  use Condukt
 
   @impl true
   def tools do
     [
-      {HelmsmanBrowseTool, pool: MyApp.BrowserPool}
+      {ConductBrowseTool, pool: MyApp.BrowserPool}
     ]
   end
 end

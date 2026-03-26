@@ -1,4 +1,4 @@
-defmodule HelmsmanBrowseTool.ReleaseVersion do
+defmodule ConductBrowseTool.ReleaseVersion do
   @version_regex ~r/@version "(\d+)\.(\d+)\.(\d+)"/
 
   def main(["current"]) do
@@ -68,4 +68,4 @@ defmodule HelmsmanBrowseTool.ReleaseVersion do
   defp format_version({major, minor, patch}), do: "#{major}.#{minor}.#{patch}"
 end
 
-HelmsmanBrowseTool.ReleaseVersion.main(System.argv())
+ConductBrowseTool.ReleaseVersion.main(System.argv())

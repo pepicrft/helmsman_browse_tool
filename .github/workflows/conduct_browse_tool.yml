@@ -1,4 +1,4 @@
-name: HelmsmanBrowseTool
+name: ConductBrowseTool
 
 on:
   pull_request:

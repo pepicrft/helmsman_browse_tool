@@ -1,20 +1,20 @@
-defmodule HelmsmanBrowseTool.MixProject do
+defmodule ConductBrowseTool.MixProject do
   use Mix.Project
 
   @version "0.3.0"
-  @source_url "https://github.com/pepicrft/helmsman_browse_tool"
+  @source_url "https://github.com/pepicrft/conduct_browse_tool"
 
   def project do
     [
-      app: :helmsman_browse_tool,
+      app: :conduct_browse_tool,
       version: @version,
       elixir: "~> 1.18",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       docs: docs(),
       package: package(),
-      name: "HelmsmanBrowseTool",
-      description: "A Helmsman tool for web browsing via Browse",
+      name: "ConductBrowseTool",
+      description: "A Condukt tool for web browsing via Browse",
       source_url: @source_url,
       elixirc_paths: elixirc_paths(Mix.env()),
       aliases: aliases()
@@ -32,7 +32,7 @@ defmodule HelmsmanBrowseTool.MixProject do
 
   defp deps do
     [
-      {:helmsman, "~> 0.4"},
+      {:condukt, "~> 0.4"},
       {:browse, "~> 0.2"},
       {:quokka, "~> 2.12", only: [:dev, :test], runtime: false},
       {:ex_doc, "~> 0.35", only: :dev, runtime: false},
@@ -44,7 +44,7 @@ defmodule HelmsmanBrowseTool.MixProject do
 
   defp docs do
     [
-      main: "HelmsmanBrowseTool",
+      main: "ConductBrowseTool",
       extras: ["README.md"],
       source_ref: @version,
       source_url: @source_url

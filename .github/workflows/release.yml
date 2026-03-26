@@ -47,7 +47,7 @@ jobs:
 
           current_version=$(elixir scripts/version.exs current)
           latest_tag=$(git describe --tags --abbrev=0 2>/dev/null || true)
-          published_version=$(curl -fsSL "https://hex.pm/api/packages/helmsman_browse_tool" | jq -r '.latest_version // empty')
+          published_version=$(curl -fsSL "https://hex.pm/api/packages/conduct_browse_tool" | jq -r '.latest_version // empty')
 
           if [ -n "$latest_tag" ]; then
             git cliff --config .github/cliff-release.toml --context --unreleased > release-context.json
@@ -99,7 +99,7 @@ jobs:
       - name: Validate Hex package
         if: steps.plan.outputs.should_release == 'true'
         run: |
-          build_dir="$(mktemp -d /tmp/helmsman-browse-tool-hex-build-XXXXXX)"
+          build_dir="$(mktemp -d /tmp/conduct-browse-tool-hex-build-XXXXXX)"
           mix hex.build --unpack -o "$build_dir"
 
       - name: Publish release
@@ -120,7 +120,7 @@ jobs:
           if git diff --cached --quiet; then
             release_commit=$(git rev-parse HEAD)
           else
-            git commit -m "[Release] HelmsmanBrowseTool ${{ steps.plan.outputs.next_version }}"
+            git commit -m "[Release] ConductBrowseTool ${{ steps.plan.outputs.next_version }}"
             release_commit=$(git rev-parse HEAD)
           fi
 

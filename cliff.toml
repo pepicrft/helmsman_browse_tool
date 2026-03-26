@@ -1,6 +1,6 @@
 [remote.github]
 owner = "pepicrft"
-repo = "helmsman_browse_tool"
+repo = "conduct_browse_tool"
 
 [changelog]
 header = """

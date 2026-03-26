@@ -1,4 +1,4 @@
-defmodule HelmsmanBrowseToolTest do
+defmodule ConductBrowseToolTest do
   use ExUnit.Case, async: true
   use Mimic
 
@@ -6,13 +6,13 @@ defmodule HelmsmanBrowseToolTest do
 
   describe "name/1" do
     test "returns browse" do
-      assert HelmsmanBrowseTool.name([]) == "browse"
+      assert ConductBrowseTool.name([]) == "browse"
     end
   end
 
   describe "description/1" do
     test "returns a non-empty description" do
-      description = HelmsmanBrowseTool.description([])
+      description = ConductBrowseTool.description([])
       assert is_binary(description)
       assert String.length(description) > 0
     end
@@ -20,7 +20,7 @@ defmodule HelmsmanBrowseToolTest do
 
   describe "parameters/1" do
     test "returns a valid JSON schema with action as required" do
-      params = HelmsmanBrowseTool.parameters([])
+      params = ConductBrowseTool.parameters([])
       assert params.type == "object"
       assert "action" in params.required
       assert Map.has_key?(params.properties, :action)
@@ -50,7 +50,7 @@ defmodule HelmsmanBrowseToolTest do
       end)
 
       assert {:ok, "Navigated to https://example.com"} ==
-               HelmsmanBrowseTool.call(%{"action" => "navigate", "url" => "https://example.com"}, context)
+               ConductBrowseTool.call(%{"action" => "navigate", "url" => "https://example.com"}, context)
     end
 
     test "navigate action returns error when url is missing", %{context: context} do
@@ -62,7 +62,7 @@ defmodule HelmsmanBrowseToolTest do
       end)
 
       assert {:error, "Missing required parameter: url"} ==
-               HelmsmanBrowseTool.call(%{"action" => "navigate"}, context)
+               ConductBrowseTool.call(%{"action" => "navigate"}, context)
     end
 
     test "content action calls Browse.content", %{context: context} do
@@ -78,7 +78,7 @@ defmodule HelmsmanBrowseToolTest do
       end)
 
       assert {:ok, "<html><body>Hello</body></html>"} ==
-               HelmsmanBrowseTool.call(%{"action" => "content"}, context)
+               ConductBrowseTool.call(%{"action" => "content"}, context)
     end
 
     test "current_url action calls Browse.current_url", %{context: context} do
@@ -94,7 +94,7 @@ defmodule HelmsmanBrowseToolTest do
       end)
 
       assert {:ok, "https://example.com/page"} ==
-               HelmsmanBrowseTool.call(%{"action" => "current_url"}, context)
+               ConductBrowseTool.call(%{"action" => "current_url"}, context)
     end
 
     test "screenshot action calls Browse.capture_screenshot", %{context: context} do
@@ -110,7 +110,7 @@ defmodule HelmsmanBrowseToolTest do
       end)
 
       assert {:ok, %{type: :image, media_type: "image/png", data: Base.encode64("fake_png_data")}} ==
-               HelmsmanBrowseTool.call(%{"action" => "screenshot"}, context)
+               ConductBrowseTool.call(%{"action" => "screenshot"}, context)
     end
 
     test "print_to_pdf action calls Browse.print_to_pdf", %{context: context} do
@@ -126,7 +126,7 @@ defmodule HelmsmanBrowseToolTest do
       end)
 
       assert {:ok, %{type: :document, media_type: "application/pdf", data: Base.encode64("fake_pdf_data")}} ==
-               HelmsmanBrowseTool.call(%{"action" => "print_to_pdf"}, context)
+               ConductBrowseTool.call(%{"action" => "print_to_pdf"}, context)
     end
 
     test "click action calls Browse.click", %{context: context} do
@@ -142,7 +142,7 @@ defmodule HelmsmanBrowseToolTest do
       end)
 
       assert {:ok, "Clicked #submit"} ==
-               HelmsmanBrowseTool.call(%{"action" => "click", "selector" => "#submit"}, context)
+               ConductBrowseTool.call(%{"action" => "click", "selector" => "#submit"}, context)
     end
 
     test "fill action calls Browse.fill", %{context: context} do
@@ -158,7 +158,7 @@ defmodule HelmsmanBrowseToolTest do
       end)
 
       assert {:ok, "Filled #email with value"} ==
-               HelmsmanBrowseTool.call(
+               ConductBrowseTool.call(
                  %{"action" => "fill", "selector" => "#email", "value" => "test@example.com"},
                  context
                )
@@ -177,7 +177,7 @@ defmodule HelmsmanBrowseToolTest do
       end)
 
       assert {:ok, "Element #loading is visible"} ==
-               HelmsmanBrowseTool.call(%{"action" => "wait_for", "selector" => "#loading"}, context)
+               ConductBrowseTool.call(%{"action" => "wait_for", "selector" => "#loading"}, context)
     end
 
     test "wait_for action returns error when selector is missing", %{context: context} do
@@ -189,7 +189,7 @@ defmodule HelmsmanBrowseToolTest do
       end)
 
       assert {:error, "Missing required parameter: selector"} ==
-               HelmsmanBrowseTool.call(%{"action" => "wait_for"}, context)
+               ConductBrowseTool.call(%{"action" => "wait_for"}, context)
     end
 
     test "evaluate action calls Browse.evaluate", %{context: context} do
@@ -205,7 +205,7 @@ defmodule HelmsmanBrowseToolTest do
       end)
 
       assert {:ok, "\"My Page\""} ==
-               HelmsmanBrowseTool.call(%{"action" => "evaluate", "expression" => "document.title"}, context)
+               ConductBrowseTool.call(%{"action" => "evaluate", "expression" => "document.title"}, context)
     end
 
     test "unknown action returns error", %{context: context} do
@@ -217,12 +217,12 @@ defmodule HelmsmanBrowseToolTest do
       end)
 
       assert {:error, "Unknown action: invalid" <> _} =
-               HelmsmanBrowseTool.call(%{"action" => "invalid"}, context)
+               ConductBrowseTool.call(%{"action" => "invalid"}, context)
     end
 
     test "missing action returns error", %{context: context} do
       assert {:error, "Missing required parameter: action"} ==
-               HelmsmanBrowseTool.call(%{}, context)
+               ConductBrowseTool.call(%{}, context)
     end
   end
 end
