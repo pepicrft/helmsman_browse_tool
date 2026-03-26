@@ -1,4 +1,4 @@
-defmodule ConductBrowseTool.ReleaseVersion do
+defmodule ConduktBrowseTool.ReleaseVersion do
   @version_regex ~r/@version "(\d+)\.(\d+)\.(\d+)"/
 
   def main(["current"]) do
@@ -68,4 +68,4 @@ defmodule ConductBrowseTool.ReleaseVersion do
   defp format_version({major, minor, patch}), do: "#{major}.#{minor}.#{patch}"
 end
 
-ConductBrowseTool.ReleaseVersion.main(System.argv())
+ConduktBrowseTool.ReleaseVersion.main(System.argv())

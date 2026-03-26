@@ -20,7 +20,7 @@ erl_crash.dump
 *.ez
 
 # Ignore package tarball (built via "mix hex.build").
-conduct_browse_tool-*.tar
+condukt_browse_tool-*.tar
 
 # Temporary files
 /tmp/

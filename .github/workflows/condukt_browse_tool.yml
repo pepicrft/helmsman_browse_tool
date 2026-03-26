@@ -1,4 +1,4 @@
-name: ConductBrowseTool
+name: ConduktBrowseTool
 
 on:
   pull_request:

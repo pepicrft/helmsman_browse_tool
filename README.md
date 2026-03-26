@@ -1,15 +1,15 @@
-# 🌐 ConductBrowseTool
+# 🌐 ConduktBrowseTool
 
 A [Condukt](https://github.com/pepicrft/condukt) tool that gives AI agents the ability to browse the web using [Browse](https://github.com/pepicrft/browse). 🤖🧭
 
 ## 📦 Installation
 
-Add `conduct_browse_tool` to your list of dependencies in `mix.exs`, along with a browser backend:
+Add `condukt_browse_tool` to your list of dependencies in `mix.exs`, along with a browser backend:
 
 ```elixir
 def deps do
   [
-    {:conduct_browse_tool, "~> 0.2.0"},
+    {:condukt_browse_tool, "~> 0.2.0"},
 
     # Pick a browser backend:
     {:browse_chrome, "~> 0.2"},  # Headless Chrome via CDP
@@ -30,7 +30,7 @@ defmodule MyAgent do
   @impl true
   def tools do
     [
-      {ConductBrowseTool, pool: MyApp.BrowserPool}
+      {ConduktBrowseTool, pool: MyApp.BrowserPool}
     ]
   end
 end

@@ -1,4 +1,4 @@
-defmodule ConductBrowseToolTest do
+defmodule ConduktBrowseToolTest do
   use ExUnit.Case, async: true
   use Mimic
 
@@ -6,13 +6,13 @@ defmodule ConductBrowseToolTest do
 
   describe "name/1" do
     test "returns browse" do
-      assert ConductBrowseTool.name([]) == "browse"
+      assert ConduktBrowseTool.name([]) == "browse"
     end
   end
 
   describe "description/1" do
     test "returns a non-empty description" do
-      description = ConductBrowseTool.description([])
+      description = ConduktBrowseTool.description([])
       assert is_binary(description)
       assert String.length(description) > 0
     end
@@ -20,7 +20,7 @@ defmodule ConductBrowseToolTest do
 
   describe "parameters/1" do
     test "returns a valid JSON schema with action as required" do
-      params = ConductBrowseTool.parameters([])
+      params = ConduktBrowseTool.parameters([])
       assert params.type == "object"
       assert "action" in params.required
       assert Map.has_key?(params.properties, :action)
@@ -50,7 +50,7 @@ defmodule ConductBrowseToolTest do
       end)
 
       assert {:ok, "Navigated to https://example.com"} ==
-               ConductBrowseTool.call(%{"action" => "navigate", "url" => "https://example.com"}, context)
+               ConduktBrowseTool.call(%{"action" => "navigate", "url" => "https://example.com"}, context)
     end
 
     test "navigate action returns error when url is missing", %{context: context} do
@@ -62,7 +62,7 @@ defmodule ConductBrowseToolTest do
       end)
 
       assert {:error, "Missing required parameter: url"} ==
-               ConductBrowseTool.call(%{"action" => "navigate"}, context)
+               ConduktBrowseTool.call(%{"action" => "navigate"}, context)
     end
 
     test "content action calls Browse.content", %{context: context} do
@@ -78,7 +78,7 @@ defmodule ConductBrowseToolTest do
       end)
 
       assert {:ok, "<html><body>Hello</body></html>"} ==
-               ConductBrowseTool.call(%{"action" => "content"}, context)
+               ConduktBrowseTool.call(%{"action" => "content"}, context)
     end
 
     test "current_url action calls Browse.current_url", %{context: context} do
@@ -94,7 +94,7 @@ defmodule ConductBrowseToolTest do
       end)
 
       assert {:ok, "https://example.com/page"} ==
-               ConductBrowseTool.call(%{"action" => "current_url"}, context)
+               ConduktBrowseTool.call(%{"action" => "current_url"}, context)
     end
 
     test "screenshot action calls Browse.capture_screenshot", %{context: context} do
@@ -110,7 +110,7 @@ defmodule ConductBrowseToolTest do
       end)
 
       assert {:ok, %{type: :image, media_type: "image/png", data: Base.encode64("fake_png_data")}} ==
-               ConductBrowseTool.call(%{"action" => "screenshot"}, context)
+               ConduktBrowseTool.call(%{"action" => "screenshot"}, context)
     end
 
     test "print_to_pdf action calls Browse.print_to_pdf", %{context: context} do
@@ -126,7 +126,7 @@ defmodule ConductBrowseToolTest do
       end)
 
       assert {:ok, %{type: :document, media_type: "application/pdf", data: Base.encode64("fake_pdf_data")}} ==
-               ConductBrowseTool.call(%{"action" => "print_to_pdf"}, context)
+               ConduktBrowseTool.call(%{"action" => "print_to_pdf"}, context)
     end
 
     test "click action calls Browse.click", %{context: context} do
@@ -142,7 +142,7 @@ defmodule ConductBrowseToolTest do
       end)
 
       assert {:ok, "Clicked #submit"} ==
-               ConductBrowseTool.call(%{"action" => "click", "selector" => "#submit"}, context)
+               ConduktBrowseTool.call(%{"action" => "click", "selector" => "#submit"}, context)
     end
 
     test "fill action calls Browse.fill", %{context: context} do
@@ -158,7 +158,7 @@ defmodule ConductBrowseToolTest do
       end)
 
       assert {:ok, "Filled #email with value"} ==
-               ConductBrowseTool.call(
+               ConduktBrowseTool.call(
                  %{"action" => "fill", "selector" => "#email", "value" => "test@example.com"},
                  context
                )
@@ -177,7 +177,7 @@ defmodule ConductBrowseToolTest do
       end)
 
       assert {:ok, "Element #loading is visible"} ==
-               ConductBrowseTool.call(%{"action" => "wait_for", "selector" => "#loading"}, context)
+               ConduktBrowseTool.call(%{"action" => "wait_for", "selector" => "#loading"}, context)
     end
 
     test "wait_for action returns error when selector is missing", %{context: context} do
@@ -189,7 +189,7 @@ defmodule ConductBrowseToolTest do
       end)
 
       assert {:error, "Missing required parameter: selector"} ==
-               ConductBrowseTool.call(%{"action" => "wait_for"}, context)
+               ConduktBrowseTool.call(%{"action" => "wait_for"}, context)
     end
 
     test "evaluate action calls Browse.evaluate", %{context: context} do
@@ -205,7 +205,7 @@ defmodule ConductBrowseToolTest do
       end)
 
       assert {:ok, "\"My Page\""} ==
-               ConductBrowseTool.call(%{"action" => "evaluate", "expression" => "document.title"}, context)
+               ConduktBrowseTool.call(%{"action" => "evaluate", "expression" => "document.title"}, context)
     end
 
     test "unknown action returns error", %{context: context} do
@@ -217,12 +217,12 @@ defmodule ConductBrowseToolTest do
       end)
 
       assert {:error, "Unknown action: invalid" <> _} =
-               ConductBrowseTool.call(%{"action" => "invalid"}, context)
+               ConduktBrowseTool.call(%{"action" => "invalid"}, context)
     end
 
     test "missing action returns error", %{context: context} do
       assert {:error, "Missing required parameter: action"} ==
-               ConductBrowseTool.call(%{}, context)
+               ConduktBrowseTool.call(%{}, context)
     end
   end
 end

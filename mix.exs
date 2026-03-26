@@ -1,19 +1,19 @@
-defmodule ConductBrowseTool.MixProject do
+defmodule ConduktBrowseTool.MixProject do
   use Mix.Project
 
   @version "0.3.0"
-  @source_url "https://github.com/pepicrft/conduct_browse_tool"
+  @source_url "https://github.com/pepicrft/condukt_browse_tool"
 
   def project do
     [
-      app: :conduct_browse_tool,
+      app: :condukt_browse_tool,
       version: @version,
       elixir: "~> 1.18",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       docs: docs(),
       package: package(),
-      name: "ConductBrowseTool",
+      name: "ConduktBrowseTool",
       description: "A Condukt tool for web browsing via Browse",
       source_url: @source_url,
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -44,7 +44,7 @@ defmodule ConductBrowseTool.MixProject do
 
   defp docs do
     [
-      main: "ConductBrowseTool",
+      main: "ConduktBrowseTool",
       extras: ["README.md"],
       source_ref: @version,
       source_url: @source_url

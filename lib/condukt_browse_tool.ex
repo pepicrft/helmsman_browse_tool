@@ -1,4 +1,4 @@
-defmodule ConductBrowseTool do
+defmodule ConduktBrowseTool do
   @moduledoc """
   A Condukt tool that gives AI agents the ability to browse the web.
 
@@ -14,7 +14,7 @@ defmodule ConductBrowseTool do
         @impl true
         def tools do
           [
-            {ConductBrowseTool, pool: MyApp.BrowserPool}
+            {ConduktBrowseTool, pool: MyApp.BrowserPool}
           ]
         end
       end
